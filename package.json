@@ -11,6 +11,7 @@
   "dependencies": {
     "defaultcss": "^1.1.0",
     "edit": "^1.0.0",
+    "flatui": "^1.0.0",
     "term.js": "0.0.4",
     "tree-view": "^2.1.3",
     "websocket-stream": "^1.0.2"
