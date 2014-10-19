@@ -1,0 +1,48 @@
+.CodeMirror { font-size: 12px; height: 100% !important; }
+.CodeMirror-scroll { height: 100%; }
+.CodeMirror div.CodeMirror-selected { background: rgba(0,0,0,0.1); }
+.CodeMirror-focused div.CodeMirror-selected { background: rgba(0,0,255,0.1); }
+.CodeMirror .errorLine { background: rgba(255,0,0,0.25); }
+.container { }
+
+.editor {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  right: 0;
+  bottom: 0;
+}
+
+.guide {
+  background: #f7f7f7;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 0;
+  bottom: 50%;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tree {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 80%;
+  bottom: 0;
+  padding: 2px 0 0 4px;
+}
+
+.terminal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 50%;
+  bottom: 50%;
+  font-family: monospace;
+  background-color: black;
+}
+
+.terminal-cursor {
+  background-color: grey;
+}

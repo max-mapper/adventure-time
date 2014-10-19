@@ -3,41 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>dat adventure</title>
-    <style type="text/css">
-      .CodeMirror { font-size: 12px; height: 100% !important; }
-      .CodeMirror-scroll { height: 100%; }
-      .CodeMirror div.CodeMirror-selected { background: rgba(0,0,0,0.1); }
-      .CodeMirror-focused div.CodeMirror-selected { background: rgba(0,0,255,0.1); }
-      .CodeMirror .errorLine { background: rgba(255,0,0,0.25); }
-      .container { }
-      .editor {
-        position: absolute;
-        top: 50%;
-        left: 25%;
-        right: 0;
-        bottom: 0;
-      }
-      .guide {
-        background: #e2e2e2;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 50%;
-      }
-      .tree {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 75%;
-        bottom: 0;
-      }
-    </style>
+    <link rel='stylesheet' href="style.css"></link>
 </head>
 <body>
   <div class="container editor"></div>
   <div class="container tree"></div>
-  <div class="container guide"></div>
+  <div class="container guide">
+    <div class="demo-text-box prl">
+       <h3 class="demo-panel-title">Get Dat</h3>
+
+      <p>This is a workshop for learning how to use <strong>dat</strong> to work with datasets on the command line.</p>
+      <p>On your left is a terminal that is connected to a server that is running a brand new Docker container that comes pre-installed with a copy of dat. Below is a basic file browser and text editor that is connected to the filesystem of the server.</p>
+    </div>
+  </div>
+  <div class="container terminal"></div>
   <script src="demo.js" type="text/javascript"></script>
 </body>
 </html>
