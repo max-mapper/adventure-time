@@ -39,10 +39,11 @@
   left: 0;
   right: 50%;
   bottom: 50%;
-  font-family: monospace;
-  background-color: black;
 }
 
-.terminal-cursor {
-  background-color: grey;
+.console iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-width: 0;
 }

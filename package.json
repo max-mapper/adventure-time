@@ -4,13 +4,13 @@
   "description": "a web UI for doing nodeschool adventures in the browser",
   "main": "index.js",
   "scripts": {
-    "start": "beefy demo.js"
+    "start": "beefy demo.js:demo-bundle.js terminal.js:terminal-bundle.js"
   },
   "author": "max ogden",
   "license": "BSD",
   "dependencies": {
     "defaultcss": "^1.1.0",
-    "docker-browser-console": "^2.0.1",
+    "docker-browser-console": "^3.0.0",
     "edit": "^1.0.0",
     "flatui": "^1.0.0",
     "term.js": "0.0.4",
