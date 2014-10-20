@@ -4,7 +4,9 @@
   "description": "a web UI for doing nodeschool adventures in the browser",
   "main": "index.js",
   "scripts": {
-    "start": "beefy demo.js:demo-bundle.js terminal.js:terminal-bundle.js"
+    "start": "beefy demo.js:demo-bundle.js terminal.js:terminal-bundle.js",
+    "build": "browserify demo.js -o demo-bundle.js terminal.js -o terminal-bundle.js",
+    "deploy": "gh-pages-deploy"
   },
   "author": "max ogden",
   "license": "BSD",
@@ -13,9 +15,17 @@
     "docker-browser-console": "^3.0.0",
     "edit": "^1.0.0",
     "flatui": "^1.0.0",
+    "gh-pages-deploy": "^0.1.1",
+    "iframe": "^0.3.0",
     "term.js": "0.0.4",
     "tree-view": "^2.1.3",
     "websocket-stream": "^1.0.2"
+  },
+  "gh-pages-deploy": {
+    "prep": [
+      "build"
+    ],
+    "noprompt": "false"
   },
   "devDependencies": {
     "beefy": "^2.1.1",

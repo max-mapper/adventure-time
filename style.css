@@ -1,3 +1,7 @@
+html, body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .CodeMirror { font-size: 12px; height: 100% !important; }
 .CodeMirror-scroll { height: 100%; }
 .CodeMirror div.CodeMirror-selected { background: rgba(0,0,0,0.1); }
