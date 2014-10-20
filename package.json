@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "beefy demo.js:demo-bundle.js terminal.js:terminal-bundle.js",
-    "build": "browserify demo.js -o demo-bundle.js terminal.js -o terminal-bundle.js",
+    "build": "browserify demo.js -o demo-bundle.js && browserify terminal.js -o terminal-bundle.js",
     "deploy": "gh-pages-deploy"
   },
   "author": "max ogden",
