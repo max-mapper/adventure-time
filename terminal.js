@@ -22,3 +22,12 @@ container.on('stderr', onoutput)
 container.once('stdout', function() {
   window.parent.postMessage('ready', '*')
 })
+
+window.onfocus = function() {
+  document.body.className = 'focus'
+}
+
+window.onblur = function() {
+  document.body.className = 'blur'
+}
+
