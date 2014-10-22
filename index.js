@@ -6,6 +6,8 @@ var url = require('url')
 var querystring = require('querystring')
 var iframe = require('iframe')
 
+var production = !location.port // a bit hackish but assume production if no custom port
+
 module.exports = function(opts) {
   if (!opts) opts = {}
   
@@ -19,7 +21,7 @@ module.exports = function(opts) {
   
   var qs = url.parse(window.location.href, true).query
 
-  if (!qs.server) qs.server = 'dev.try-dat.com:8080'
+  if (!qs.server) qs.server = production ? 'try-dat.com' : 'dev.try-dat.com:8080'
   if (!qs.id) qs.id = Math.random().toString(36).slice(2)
 
   consoleURL += '?'+querystring.stringify(qs)
