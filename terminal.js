@@ -6,8 +6,19 @@ var websocket = require('websocket-stream')
 var consoleDiv = document.querySelector('.console')
 
 var qs = url.parse(window.location.href, true).query
-var serverURL = qs.server || 'ws://dev.try-dat.com:8080'
-var socket = websocket(serverURL)
+var socket = websocket('ws://'+qs.server+'/'+(qs.id || ''))
 var container = docker()
 socket.pipe(container).pipe(socket)
 container.appendTo(consoleDiv)
+
+var onoutput = function(data) {
+  if (data.indexOf('\n') === -1) return
+  window.parent.postMessage('update', '*')
+}
+
+container.on('stdout', onoutput)
+container.on('stderr', onoutput)
+
+container.once('stdout', function() {
+  window.parent.postMessage('ready', '*')
+})
