@@ -7,7 +7,7 @@ var consoleDiv = document.querySelector('.console')
 
 var qs = url.parse(window.location.href, true).query
 var socket = websocket('ws://'+qs.server+'/'+(qs.id || ''))
-var container = docker()
+var container = docker({style:false})
 socket.pipe(container).pipe(socket)
 container.appendTo(consoleDiv)
 
