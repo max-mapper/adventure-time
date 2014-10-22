@@ -28,7 +28,7 @@ module.exports = function(opts) {
   var consoleFrame = iframe({src: consoleURL, container: consoleDiv})
   
   // instantiate the editor
-  edit({
+  var cm = edit({
     container: editorDiv,
     autofocus: false
   })
@@ -54,20 +54,72 @@ module.exports = function(opts) {
     })
   }
 
-  var onmessage = function(e) {
-    if (e.data === 'ready') return cd('/')
-
+  var updateTree = throttle(1000, function(cb) {
     var dirs = Object.keys(tree.directories)
+
     dirs.forEach(function(path) {
       readdir(path, function(err, files) {
         if (err) return onerror(err)
         if (tree.directories[path]) tree.directory(path, files)
       })
     })
+
+    cb()
+  })
+
+  var filename = null
+  var save = throttle(1000, function(cb) {
+    if (!filename) return cb()
+    xhr({
+      method: 'PUT',
+      url: 'http://'+qs.server+'/files/'+qs.id+encodeURI(filename),
+      body: cm.getValue()
+    }, cb)
+  })
+
+  // autosave for now
+  cm.on('change', save)
+
+  var onmessage = function(e) {
+    if (e.data === 'ready') return cd('/')
+    if (e.data === 'update') return updateTree()
   }
 
   tree.on('directory', cd)
+  tree.on('file', function(path) {
+    xhr({
+      method: 'GET',
+      url: 'http://'+qs.server+'/files/'+qs.id+path
+    }, function(err, response) {
+      if (err) return onerror(err)
+      filename = path
+      cm.setValue(response.responseText)
+      cm.focus()
+    })
+  })
+
   window.addEventListener('message', onmessage, false)
+}
+
+function throttle(wait, fn) { // todo: ask @maxogden to find/create a module that does this
+  var blocked = false
+  var called = false
+
+  return function wrap() {
+    if (blocked) {
+      called = true
+      return
+    }
+
+    blocked = true
+    called = false
+    fn(function() {
+      setTimeout(function() {
+        blocked = false
+        if (called) wrap()
+      }, wait)
+    })
+  }
 }
 
 function onerror(err) {
