@@ -35,6 +35,7 @@ html, body {
   right: 80%;
   bottom: 0;
   padding: 2px 0 0 4px;
+  overflow-y: scroll;
 }
 
 .console {
