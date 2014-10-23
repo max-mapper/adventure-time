@@ -4,8 +4,8 @@
   "description": "a web UI for doing nodeschool adventures in the browser",
   "main": "index.js",
   "scripts": {
-    "start": "beefy demo.js:demo-bundle.js terminal.js:terminal-bundle.js",
-    "build": "browserify demo.js -o demo-bundle.js && browserify terminal.js -o terminal-bundle.js",
+    "start": "beefy demo-terminal.js:demo-terminal-bundle.js demo.js:demo-bundle.js",
+    "build": "browserify demo.js -o demo-bundle.js && browserify demo-terminal.js -o demo-terminal-bundle.js",
     "deploy": "gh-pages-deploy"
   },
   "author": "max ogden",

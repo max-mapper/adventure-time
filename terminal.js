@@ -2,50 +2,50 @@ var url = require('url')
 var docker = require('docker-browser-console')
 var websocket = require('websocket-stream')
 var termjs = require('term.js')
+var rainbow = require('rainbow-load')
 
-var consoleDiv = document.querySelector('.console')
+module.exports = function(parentDiv) {
+  var consoleDiv = parentDiv || document.querySelector('.console')
 
-var rainbow = require('rainbow-load');
- 
-rainbow.show()
+  rainbow.show()
 
-var qs = url.parse(window.location.href, true).query
-var socket = websocket('ws://'+qs.server+'/'+(qs.id || ''))
+  var qs = url.parse(window.location.href, true).query
+  var socket = websocket('ws://'+qs.server+'/'+(qs.id || ''))
 
-termjs.Terminal.colors[256] = '#ffffff'
-termjs.Terminal.colors[257] = '#000000'
+  termjs.Terminal.colors[256] = '#ffffff'
+  termjs.Terminal.colors[257] = '#000000'
 
-var container = docker({
-  style:false, renderer: termjs
-})
+  var container = docker({
+    style:false, renderer: termjs
+  })
 
-socket.pipe(container).pipe(socket)
-container.appendTo(consoleDiv)
+  socket.pipe(container).pipe(socket)
+  container.appendTo(consoleDiv)
 
-socket.on('error', function(err) {
-  rainbow.hide()
-  container.terminal.write('WebSocket connection error. Open DevTools for more information.')
-  window.parent.postMessage('connectionError', '*')
-})
+  socket.on('error', function(err) {
+    rainbow.hide()
+    container.terminal.write('WebSocket connection error. Open DevTools for more information.')
+    window.parent.postMessage('connectionError', '*')
+  })
 
-var onoutput = function(data) {
-  if (data.indexOf('\n') === -1) return
-  window.parent.postMessage('update', '*')
+  var onoutput = function(data) {
+    if (data.indexOf('\n') === -1) return
+    window.parent.postMessage('update', '*')
+  }
+
+  container.on('stdout', onoutput)
+  container.on('stderr', onoutput)
+
+  container.once('stdout', function() {
+    rainbow.hide()
+    window.parent.postMessage('ready', '*')
+  })
+
+  window.onfocus = function() {
+    document.body.className = 'focus'
+  }
+
+  window.onblur = function() {
+    document.body.className = 'blur'
+  }
 }
-
-container.on('stdout', onoutput)
-container.on('stderr', onoutput)
-
-container.once('stdout', function() {
-  rainbow.hide()
-  window.parent.postMessage('ready', '*')
-})
-
-window.onfocus = function() {
-  document.body.className = 'focus'
-}
-
-window.onblur = function() {
-  document.body.className = 'blur'
-}
-

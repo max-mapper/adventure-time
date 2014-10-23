@@ -4,32 +4,18 @@ var edit = require('edit')
 var defaultcss = require('insert-css')
 var on = require('component-delegate').bind
 var elementClass = require('element-class')
-var url = require('url')
-var querystring = require('querystring')
 var iframe = require('iframe')
 
-var production = !location.port // a bit hackish but assume production if no custom port
-
 module.exports = function(opts) {
-  if (!opts) opts = {}
-  
-  var guideURL = opts.guide || 'http://maxogden.github.io/get-dat'
-  var consoleURL = opts.console || 'terminal.html'
+  if (!opts || !opts.guide || !opts.id || !opts.server) throw new Error('Must specify guide, server and id options')
   
   var editorDiv = document.querySelector('.editor')
   var treeDiv = document.querySelector('.tree')
   var guideDiv = document.querySelector('.guide')
   var consoleDiv = document.querySelector('.console')
-  
-  var qs = url.parse(window.location.href, true).query
-
-  if (!qs.server) qs.server = production ? 'try-dat.com' : 'dev.try-dat.com:8080'
-  if (!qs.id) qs.id = Math.random().toString(36).slice(2)
-
-  consoleURL += '?'+querystring.stringify(qs)
-  
-  var guideFrame = iframe({src: guideURL, container: guideDiv})
-  var consoleFrame = iframe({src: consoleURL, container: consoleDiv})
+  var defaultConsole = 'terminal.html?server=' + opts.server + '&id=' + opts.id
+  var guideFrame = iframe({src: opts.guide, container: guideDiv})
+  var consoleFrame = iframe({src: opts.console || defaultConsole, container: consoleDiv})
   
   var actions = {
     "show-bottom": function() {
@@ -57,7 +43,7 @@ module.exports = function(opts) {
   var readdir = function(path, cb) {
     xhr({
       method: 'GET',
-      url: 'http://'+qs.server+'/files/'+qs.id+path,
+      url: 'http://'+opts.server+'/files/'+opts.id+path,
       json: true
     }, function(err, response) {
       if (err) return cb(err)
@@ -90,7 +76,7 @@ module.exports = function(opts) {
     if (!filename) return cb()
     xhr({
       method: 'PUT',
-      url: 'http://'+qs.server+'/files/'+qs.id+encodeURI(filename),
+      url: 'http://'+opts.server+'/files/'+opts.id+encodeURI(filename),
       body: cm.getValue()
     }, cb)
   })
@@ -108,7 +94,7 @@ module.exports = function(opts) {
   tree.on('file', function(path) {
     xhr({
       method: 'GET',
-      url: 'http://'+qs.server+'/files/'+qs.id+path
+      url: 'http://'+opts.server+'/files/'+opts.id+path
     }, function(err, response) {
       if (err) return onerror(err)
       filename = path
