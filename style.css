@@ -9,6 +9,51 @@ html, body {
 .CodeMirror .errorLine { background: rgba(255,0,0,0.25); }
 .container { }
 
+.datLogo {
+  padding: 3px 5px 0 5px;
+  height: 28px;
+  display: block;
+  float: left;
+}
+
+.datTitle {
+  line-height: 34px;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.topbar {
+  font-weight: 300;
+  height: 34px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar .buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.topbar ul { padding: 0; margin: 0; list-style: none; padding-right: 5px; }
+.topbar li { line-height: 34px; display: inline; }
+.topbar li a { padding: 0px 3px; }
+
+.panels {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
 .editor {
   position: absolute;
   top: 50%;
@@ -26,6 +71,7 @@ html, body {
   bottom: 50%;
   padding: 20px;
   border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
 }
 
 .tree {
@@ -34,7 +80,7 @@ html, body {
   left: 0;
   right: 80%;
   bottom: 0;
-  padding: 2px 0 0 4px;
+  padding: 0 0 0 4px;
   overflow-y: scroll;
 }
 
@@ -44,6 +90,7 @@ html, body {
   left: 0;
   right: 50%;
   bottom: 50%;
+  border-bottom: 1px solid #ddd;
 }
 
 .console iframe {
@@ -51,4 +98,15 @@ html, body {
   height: 100%;
   border: none;
   border-width: 0;
+}
+
+.tall {
+  bottom: 0%;
+}
+
+
+/* overrides */
+
+.tree-view .entry.selected:before {
+  background-color: #f7f7f7;
 }

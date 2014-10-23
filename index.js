@@ -2,6 +2,8 @@ var xhr = require('xhr')
 var treeView = require('tree-view')
 var edit = require('edit')
 var defaultcss = require('insert-css')
+var on = require('component-delegate').bind
+var elementClass = require('element-class')
 var url = require('url')
 var querystring = require('querystring')
 var iframe = require('iframe')
@@ -29,6 +31,20 @@ module.exports = function(opts) {
   var guideFrame = iframe({src: guideURL, container: guideDiv})
   var consoleFrame = iframe({src: consoleURL, container: consoleDiv})
   
+  var actions = {
+    "show-bottom": function() {
+      elementClass(editorDiv).remove('hidden')
+      elementClass(treeDiv).remove('hidden')
+      elementClass(consoleDiv).remove('tall')
+      elementClass(guideDiv).remove('tall')
+    },
+    "hide-bottom": function() {
+      elementClass(editorDiv).add('hidden')
+      elementClass(treeDiv).add('hidden')
+      elementClass(consoleDiv).add('tall')
+      elementClass(guideDiv).add('tall')
+    }
+  }
   // instantiate the editor
   var cm = edit({
     container: editorDiv,
@@ -85,6 +101,7 @@ module.exports = function(opts) {
   var onmessage = function(e) {
     if (e.data === 'ready') return cd('/')
     if (e.data === 'update') return updateTree()
+    // if (e.data === 'connectionError') // do stuff
   }
 
   tree.on('directory', cd)
@@ -99,6 +116,16 @@ module.exports = function(opts) {
       cm.focus()
     })
   })
+  
+  on(document.body, '.buttons a', 'click', function(e) {
+    e.preventDefault()
+    var action = e.target.attributes['data-action']
+    if (action) {
+      if (actions[action.value]) actions[action.value]()
+    }
+    return false
+  })
+  
 
   window.addEventListener('message', onmessage, false)
 }
