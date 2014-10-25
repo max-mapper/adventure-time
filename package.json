@@ -21,7 +21,7 @@
     "iframe": "^0.3.0",
     "insert-css": "^0.2.0",
     "rainbow-load": "0.0.6",
-    "term.js": "0.0.4",
+    "term.js": "maxogden/term.js#patch-1",
     "tree-view": "^2.2.0",
     "websocket-stream": "^1.0.2",
     "xhr": "^1.17.0"
