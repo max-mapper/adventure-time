@@ -7,7 +7,7 @@ more instructions soon!
 ### run the demo
 
 - install docker (docker for linux, boot2docker for mac/windows)
-- install and run https://github.com/mafintosh/try-dat
+- install and run https://github.com/mafintosh/docker-browser-server
 - install and run https://github.com/maxogden/adventure-time (the demo uses get-dat content but you can swap in your own)
 
 ### example
