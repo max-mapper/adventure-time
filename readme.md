@@ -2,7 +2,14 @@
 
 a web UI for doing nodeschool adventures in the browser
 
-more instructions soon!
+## examples
+
+here are some projects based on this
+
+- https://github.com/maxogden/get-dat
+- https://github.com/cdaringe/try-npm-guide
+
+![screenshot](screenshot.png)
 
 ### run the demo
 
