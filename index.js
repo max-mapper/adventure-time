@@ -8,7 +8,7 @@ var iframe = require('iframe')
 
 module.exports = function(opts) {
   if (!opts || !opts.guide || !opts.id || !opts.server) throw new Error('Must specify guide, server and id options')
-  
+
   var editorDiv = document.querySelector('.editor')
   var treeDiv = document.querySelector('.tree')
   var guideDiv = document.querySelector('.guide')
@@ -16,8 +16,14 @@ module.exports = function(opts) {
   var defaultConsole = 'terminal.html?server=' + opts.server + '&id=' + opts.id
   var guideFrame = iframe({src: opts.guide, container: guideDiv})
   var consoleFrame = iframe({src: opts.console || defaultConsole, container: consoleDiv})
-  
+
   var actions = {
+    "toggle-bottom": function() {
+      elementClass(editorDiv).toggle('hidden')
+      elementClass(treeDiv).toggle('hidden')
+      elementClass(consoleDiv).toggle('tall')
+      elementClass(guideDiv).toggle('tall')
+    },
     "show-bottom": function() {
       elementClass(editorDiv).remove('hidden')
       elementClass(treeDiv).remove('hidden')
@@ -36,10 +42,10 @@ module.exports = function(opts) {
     container: editorDiv,
     autofocus: false
   })
-  
+
   var tree = treeView()
   tree.appendTo(treeDiv)
-  
+
   var readdir = function(path, cb) {
     xhr({
       method: 'GET',
@@ -102,7 +108,7 @@ module.exports = function(opts) {
       cm.focus()
     })
   })
-  
+
   on(document.body, '.buttons a', 'click', function(e) {
     e.preventDefault()
     var action = e.target.attributes['data-action']
@@ -111,7 +117,7 @@ module.exports = function(opts) {
     }
     return false
   })
-  
+
 
   window.addEventListener('message', onmessage, false)
 }
