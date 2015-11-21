@@ -15,7 +15,7 @@
     "defaultcss": "^1.1.0",
     "docker-browser-console": "^4.3.0",
     "edit": "^1.0.0",
-    "element-class": "^0.1.1",
+    "element-class": "^0.2.2",
     "flatui": "^1.0.0",
     "gh-pages-deploy": "^0.1.1",
     "iframe": "^0.3.0",
