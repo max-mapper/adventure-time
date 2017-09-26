@@ -13,7 +13,7 @@
   "dependencies": {
     "component-delegate": "^0.2.3",
     "defaultcss": "^1.1.0",
-    "docker-browser-console": "^4.3.0",
+    "docker-browser-console": "^6.0.0",
     "edit": "^1.0.0",
     "element-class": "^0.2.2",
     "flatui": "^1.0.0",
