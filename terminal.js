@@ -4,19 +4,21 @@ var websocket = require('websocket-stream')
 var termjs = require('term.js')
 var rainbow = require('rainbow-load')
 
-module.exports = function(parentDiv) {
+module.exports = function (parentDiv) {
   var consoleDiv = parentDiv || document.querySelector('.console')
 
   rainbow.show()
 
   var qs = url.parse(window.location.href, true).query
-  var socket = websocket('ws://'+qs.server+'/'+(qs.id || ''))
+  var proto = 'ws://'
+  if (qs.secure) proto = 'wss://'
+  var socket = websocket(proto + qs.server + '/' + (qs.id || ''))
 
   termjs.Terminal.colors[256] = '#ffffff'
   termjs.Terminal.colors[257] = '#000000'
 
   var container = docker({
-    style:false, renderer: termjs
+    style: false, renderer: termjs
   })
 
   socket.pipe(container).pipe(socket)
