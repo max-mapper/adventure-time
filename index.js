@@ -8,7 +8,10 @@ var iframe = require('iframe')
 
 module.exports = function(opts) {
   if (!opts || !opts.guide || !opts.id || !opts.server) throw new Error('Must specify guide, server and id options')
-
+    
+  var proto = 'http://'
+  if (opts.secure) proto = 'https://'
+  
   var editorDiv = document.querySelector('.editor')
   var treeDiv = document.querySelector('.tree')
   var guideDiv = document.querySelector('.guide')
@@ -49,7 +52,7 @@ module.exports = function(opts) {
   var readdir = function(path, cb) {
     xhr({
       method: 'GET',
-      url: 'http://'+opts.server+'/files/'+opts.id+path,
+      url: proto+opts.server+'/files/'+opts.id+path,
       json: true
     }, function(err, response) {
       if (err) return cb(err)
@@ -82,7 +85,7 @@ module.exports = function(opts) {
     if (!filename) return cb()
     xhr({
       method: 'PUT',
-      url: 'http://'+opts.server+'/files/'+opts.id+encodeURI(filename),
+      url: proto+opts.server+'/files/'+opts.id+encodeURI(filename),
       body: cm.getValue()
     }, cb)
   })
@@ -100,7 +103,7 @@ module.exports = function(opts) {
   tree.on('file', function(path) {
     xhr({
       method: 'GET',
-      url: 'http://'+opts.server+'/files/'+opts.id+path
+      url: proto+opts.server+'/files/'+opts.id+path
     }, function(err, response) {
       if (err) return onerror(err)
       filename = path
